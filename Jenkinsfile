@@ -13,7 +13,10 @@ pipeline{
 		stage('Build') {
 
 			steps {
-				sh 'dockerImage = sudo docker.build -t jumanaah/docker_final_task:latest .'
+				script{
+				dockerImage = sudo docker.build jumanaah/docker_final_task:latest
+
+				}
 			}
 		}
         stage('Login') {
