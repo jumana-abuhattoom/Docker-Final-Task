@@ -13,7 +13,7 @@ def printPrice():
     response = requests.get(url).json()
     price= str(response['bpi']['USD']['rate'])
     redis1.set("current_price", price)
-    return "Current price is : " + price + "."
+    return "Current price is : " + price 
 
 @app.route('/avg')
 def printAvgPrice():

@@ -3,7 +3,8 @@ services:
   web:
     build: .
     ports:
-      - "8000:5000"
+      - target: 5000
+        published: 5000
     volumes:
       - .:/code
     environment:
