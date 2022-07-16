@@ -4,10 +4,10 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker')
-		dockerImage = ''
 	}
 
 	stages {
+        stage('Login') {
 
 			withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
             sh 'docker login -u jumanaah -p ${passwordVariable}'
@@ -18,23 +18,16 @@ pipeline{
 		stage('Build') {
 
 			steps {
-				script{
-				dockerImage = sudo docker.build jumanaah/docker_final_task:latest
-
-				}
+				sh 'sudo docker build -t jumanaah/docker_final_task:latest .'
 			}
 		}
-        stage('Login') {
+
+		stage('Push') {
 
 			steps {
-				script{
-					docker.withRegistry('', 'jumanaah/docker_final_task'){
-					dockerImage.push()
-					}
-				}
+				sh 'sudo docker push jumanaah/docker_final_task:latest'
 			}
 		}
-
 	}
 
 	post {
