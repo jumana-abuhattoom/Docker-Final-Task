@@ -9,6 +9,11 @@ pipeline{
 
 	stages {
 
+			withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
+            sh 'docker login -u jumanaah -p ${passwordVariable}'
+        }
+
+		}
 
 		stage('Build') {
 
