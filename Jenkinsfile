@@ -7,12 +7,7 @@ pipeline{
 	}
 
 	stages {
-        stage('Login') {
 
-			steps {
-				sh 'sudo -S docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin | sudo echo $DOCKERHUB_CREDENTIALS_PSW '
-			}
-		}
 
 		stage('Build') {
 
@@ -20,7 +15,12 @@ pipeline{
 				sh 'sudo docker build -t jumanaah/docker_final_task:latest .'
 			}
 		}
+        stage('Login') {
 
+			steps {
+				sh ' sudo echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
 		stage('Push') {
 
 			steps {
