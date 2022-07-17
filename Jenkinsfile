@@ -3,6 +3,7 @@ pipeline{
 	agent any
 
 
+
 	stages {
 
 		stage('Build') {
@@ -15,7 +16,7 @@ pipeline{
 		stage('Login') {
 
 			steps {
-            withCredentials([string(credentialsId: 'jumanadocker', variable: 'passwordVariable')]) {
+            withCredentials([string(credentialsId: 'docker', , passwordVariable: 'DOCKER_REGISTRY_PWD')]) {
       sh "docker login -u jumanaah -p ${passwordVariable}"
             }			}
 		}
