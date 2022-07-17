@@ -2,9 +2,6 @@ pipeline{
 
 	agent any
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker')
-	}
 
 	stages {
 
@@ -18,7 +15,7 @@ pipeline{
 		stage('Login') {
 
 			steps {
-            withCredentials([string(credentialsId: 'docker', , passwordVariable: 'DOCKER_REGISTRY_PWD')]) {
+            withCredentials([string(credentialsId: 'jumanadocker', variable: 'passwordVariable')]) {
       sh "docker login -u jumanaah -p ${passwordVariable}"
             }			}
 		}
