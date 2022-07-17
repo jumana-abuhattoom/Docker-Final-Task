@@ -2,36 +2,36 @@ pipeline{
 
 	agent any
 
-
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('docker')
+	}
 
 	stages {
+
 
 		stage('Build') {
 
 			steps {
-				sh 'docker build -t jumanaah/docker_final_task:latest .'
+				sh 'sudo docker build -t jumanaah/docker_final_task:latest .'
 			}
 		}
-
-		stage('Login') {
+        stage('Login') {
 
 			steps {
-            withCredentials([string(credentialsId: 'docker', , passwordVariable: 'DOCKER_REGISTRY_PWD')]) {
-      sh "docker login -u jumanaah -p ${passwordVariable}"
-            }			}
+				sh ' sudo echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
 		}
-
 		stage('Push') {
 
 			steps {
-				sh 'docker push jumanaah/docker_final_task:latest'
+				sh 'sudo docker push jumanaah/docker_final_task:latest'
 			}
 		}
 	}
 
 	post {
 		always {
-			sh 'docker logout'
+			sh 'sudo docker logout'
 		}
 	}
 
